@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Weather App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #1d2671, #c33764);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .app {
+      width: 360px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 22px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0;
+    }
+    .search {
+      display: flex;
+      gap: 8px;
+      margin-top: 15px;
+    }
+    .search input {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+    }
+    .search button {
+      padding: 10px 14px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background: #ffd369;
+      font-weight: 600;
+    }
+    .weather {
+      text-align: center;
+      margin-top: 22px;
+      animation: fadeIn 0.5s ease;
+    }
+    .temp {
+      font-size: 48px;
+      font-weight: 600;
+    }
+    .city {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+    .details {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 18px;
+    }
+    .card {
+      background: rgba(255,255,255,0.18);
+      border-radius: 14px;
+      padding: 10px;
+      font-size: 13px;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="header">
+      <h1>🌦 Modern Weather</h1>
+    </div>
+
+    <div class="search">
+      <input id="city" type="text" placeholder="Enter city name" />
+      <button onclick="getWeather()">Go</button>
+    </div>
+    <div class="search" style="margin-top:10px">
+      <button style="width:100%" onclick="getWeatherByLocation()">📍 Use My Location</button>
+    </div>
+
+    <div id="weather" class="weather"></div>
+  </div>
+
+  <script>
+    async function getWeather() {
+      const city = document.getElementById('city').value.trim();
+      if (!city) return alert('Enter city name');
+
+      const geoRes = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`);
+      const geoData = await geoRes.json();
+      if (!geoData.results) return alert('City not found');
+
+      const { latitude, longitude, name, country } = geoData.results[0];
+      fetchWeather(latitude, longitude, name, country);
+    }
+
+    function getWeatherByLocation() {
+      if (!navigator.geolocation) {
+        alert('Geolocation not supported');
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        const { latitude, longitude } = pos.coords;
+
+        const weatherRes = await fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
+        );
+        const weatherData = await weatherRes.json();
+
+        document.getElementById('weather').innerHTML = `
+          <div class="temp">${weatherData.current_weather.temperature}°C</div>
+          <div class="city">Your Current Location</div>
+          <div class="details">
+            <div class="card">💨 Wind<br>${weatherData.current_weather.windspeed} km/h</div>
+            <div class="card">🧭 Direction<br>${weatherData.current_weather.winddirection}°</div>
+            <div class="card">⏱ Time<br>${weatherData.current_weather.time}</div>
+            <div class="card">📍 Live Data</div>
+          </div>
+        `;
+      }, () => alert('Location permission denied'));
+    }
+
+    async function fetchWeather(lat, lon, name, country) {
+      const weatherRes = await fetch(
+        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
+      );
+      const weatherData = await weatherRes.json();
+
+      document.getElementById('weather').innerHTML = `
+        <div class="temp">${weatherData.current_weather.temperature}°C</div>
+        <div class="city">${name}, ${country}</div>
+        <div class="details">
+          <div class="card">💨 Wind<br>${weatherData.current_weather.windspeed} km/h</div>
+          <div class="card">🧭 Direction<br>${weatherData.current_weather.winddirection}°</div>
+          <div class="card">⏱ Time<br>${weatherData.current_weather.time}</div>
+          <div class="card">🌡 Unit<br>Celsius</div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
+
+ <script>
+const API_KEY = "31aacd35b766463bc4297060b48b78a2";
+
+async function getWeatherByCity() {
+  const city = document.getElementById("city").value.trim();
+
+  if (city === "") {
+    alert("Enter city name");
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${API_KEY}`
+    );
+
+    const data = await res.json();
+
+    if (res.status !== 200) {
+      alert(data.message);
+      return;
+    }
+
+    displayWeather(data);
+  } catch (error) {
+    alert("Network error");
+  }
+}
+
+function displayWeather(data) {
+  document.getElementById("weather").innerHTML = `
+    <h3>${data.name}, ${data.sys.country}</h3>
+    <h1>${Math.round(data.main.temp)}°C</h1>
+    <p>${data.weather[0].description}</p>
+    <p>Humidity: ${data.main.humidity}%</p>
+    <p>Wind: ${data.wind.speed} m/s</p>
+  `;
+}
+</script>

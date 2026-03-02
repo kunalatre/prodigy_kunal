@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kunal Atre | Portfolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+    scroll-behavior:smooth;
+}
+
+body{
+    background: linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+    color:white;
+    overflow-x:hidden;
+}
+
+/* Glass Navbar */
+nav{
+    position:fixed;
+    width:100%;
+    padding:20px 80px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    border-bottom:1px solid rgba(255,255,255,0.1);
+    z-index:1000;
+}
+
+nav h2{
+    font-weight:700;
+    letter-spacing:1px;
+    background: linear-gradient(45deg,#00f5a0,#00d9f5);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+nav ul{
+    display:flex;
+    list-style:none;
+    gap:30px;
+}
+
+nav ul li a{
+    text-decoration:none;
+    color:white;
+    font-weight:500;
+    transition:0.3s;
+}
+
+nav ul li a:hover{
+    color:#00f5a0;
+}
+
+/* Hero Section */
+.hero{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:20px;
+}
+
+.hero-content{
+    animation:fadeIn 1.5s ease;
+}
+
+.hero img{
+    width:170px;
+    border-radius:50%;
+    border:4px solid rgba(255,255,255,0.2);
+    box-shadow:0 0 30px rgba(0,255,255,0.4);
+    margin-bottom:25px;
+}
+
+.hero h1{
+    font-size:55px;
+    font-weight:800;
+}
+
+.hero span{
+    background:linear-gradient(45deg,#00f5a0,#00d9f5);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    margin-top:15px;
+    font-size:20px;
+    color:#d1d5db;
+}
+
+.btn{
+    display:inline-block;
+    margin-top:30px;
+    padding:12px 30px;
+    background:linear-gradient(45deg,#00f5a0,#00d9f5);
+    border-radius:30px;
+    color:black;
+    font-weight:600;
+    text-decoration:none;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 20px #00f5a0;
+}
+
+/* Section */
+section{
+    padding:100px 100px;
+}
+
+section h2{
+    text-align:center;
+    font-size:40px;
+    margin-bottom:60px;
+    background:linear-gradient(45deg,#00f5a0,#00d9f5);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+/* Glass Card */
+.card{
+    background:rgba(255,255,255,0.05);
+    padding:30px;
+    border-radius:20px;
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.1);
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* About */
+.about{
+    max-width:900px;
+    margin:auto;
+    text-align:center;
+    line-height:1.8;
+    font-size:18px;
+    color:#e5e7eb;
+}
+
+/* Skills */
+.skills-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:30px;
+}
+
+/* Projects */
+.projects-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.project-card h3{
+    margin-bottom:15px;
+}
+
+/* Contact */
+.contact{
+    text-align:center;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    background:rgba(0,0,0,0.4);
+    color:#aaa;
+}
+
+/* Animations */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(40px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+@media(max-width:768px){
+    nav{padding:20px;}
+    section{padding:80px 20px;}
+    .hero h1{font-size:35px;}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <h2>Kunal Atre</h2>
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+    <div class="hero-content">
+        <img src="C:\Users\DELL\.vscode\Kunal_atre photo.jpeg"1 alt="Profile">
+        <h1>Hello, I'm <span>Kunal Atre</span></h1>
+        <p>Full Stack Developer | UI/UX Enthusiast | AI Learner</p>
+        <a href="#projects" class="btn">Explore My Work</a>
+    </div>
+</section>
+
+<!-- About -->
+<section id="about">
+    <h2>About Me</h2>
+    <div class="card about">
+        Passionate web developer skilled in building modern, responsive,
+        and user-focused web applications. Experienced in frontend and backend
+        technologies with strong problem-solving ability and creative mindset.
+    </div>
+</section>
+
+<!-- Skills -->
+<section id="skills">
+    <h2>Technical Skills</h2>
+    <div class="skills-grid">
+        <div class="card">HTML5 & CSS3</div>
+        <div class="card">JavaScript & React</div>
+        <div class="card">Node.js & Express</div>
+        <div class="card">Python & ML</div>
+        <div class="card">MongoDB</div>
+        <div class="card">Git & GitHub</div>
+    </div>
+</section>
+
+<!-- Projects -->
+<section id="projects">
+    <h2>Featured Projects</h2>
+    <div class="projects-grid">
+        <div class="card project-card">
+            <h3>Solar Efficiency Prediction</h3>
+            <p>Machine Learning model predicting solar panel performance using Linear Regression.</p>
+        </div>
+        <div class="card project-card">
+            <h3>Responsive Landing Page</h3>
+            <p>Modern UI landing page built with advanced CSS and animations.</p>
+        </div>
+        <div class="card project-card">
+            <h3>Portfolio Website</h3>
+            <p>Fully responsive premium portfolio with glassmorphism design.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+    <h2>Let's Connect</h2>
+    <div class="card contact">
+        <p>Email: kunal.atre23@mmit.edu.in</p>
+        <p>Phone: +91 9322077092</p>
+        <a href="#" class="btn">Download Resume</a>
+    </div>
+</section>
+
+<footer>
+    © 2026 Kunal Atre | Premium Portfolio
+</footer>
+
+</body>
+</html>

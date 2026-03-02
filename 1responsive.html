@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizza Heaven</title>
+
+<style>
+
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+    scroll-behavior:smooth;
+}
+
+/* Scroll Progress Bar */
+#progress{
+    position:fixed;
+    top:0;
+    left:0;
+    height:5px;
+    background:#ff9800;
+    width:0%;
+    z-index:2000;
+}
+
+/* Navbar */
+nav{
+    position:fixed;
+    width:100%;
+    top:0;
+    padding:15px 50px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    backdrop-filter:blur(10px);
+    transition:0.4s;
+    z-index:1000;
+}
+
+nav.scrolled{
+    background:rgba(183,28,28,0.9);
+    box-shadow:0 5px 20px rgba(0,0,0,0.4);
+}
+
+.logo{
+    font-size:24px;
+    font-weight:bold;
+    color:wheat;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+}
+
+nav ul li{
+    margin-left:30px;
+}
+
+nav ul li a{
+    text-decoration:none;
+    color:white;
+    font-size:18px;
+    position:relative;
+    padding:5px;
+}
+
+/* Animated underline */
+nav ul li a::after{
+    content:'';
+    position:absolute;
+    width:0%;
+    height:3px;
+    left:0;
+    bottom:-5px;
+    background:#ffcc00;
+    transition:0.3s;
+}
+
+nav ul li a:hover::after,
+nav ul li a.active::after{
+    width:100%;
+}
+
+/* Hamburger */
+.menu-toggle{
+    display:none;
+    font-size:28px;
+    color:white;
+    cursor:pointer;
+}
+
+/* Sections */
+section{
+    min-height:100vh;
+    padding:120px 50px;
+    color:black;
+    text-align:center;
+}
+
+#home{
+    background:url("https://simplyhomecooked.com/wp-content/uploads/2023/04/Margherita-Pizza-3.jpg") no-repeat center/cover;
+}
+
+#menu{ background:#ff7043; }
+#about{ background:#ff9800; }
+#contact{ background:#8e24aa; }
+
+h1{
+    font-size:45px;
+    margin-bottom:20px;
+}
+
+/* Pizza Cards */
+.cards{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:30px;
+    margin-top:40px;
+}
+
+.card{
+    background:white;
+    color:black;
+    width:250px;
+    padding:20px;
+    border-radius:15px;
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 15px 25px rgba(0,0,0,0.4);
+}
+
+.card img{
+    width:100%;
+    border-radius:10px;
+}
+
+.card button{
+    margin-top:10px;
+    padding:10px;
+    width:100%;
+    background:#b71c1c;
+    border:none;
+    color:white;
+    cursor:pointer;
+    border-radius:5px;
+    transition:0.3s;
+}
+
+.card button:hover{
+    background:#ff9800;
+}
+
+/* Cart Counter */
+.cart{
+    background:#ffcc00;
+    color:black;
+    padding:5px 10px;
+    border-radius:20px;
+    margin-left:10px;
+}
+
+/* Responsive */
+@media(max-width:768px){
+    nav ul{
+        position:absolute;
+        top:70px;
+        right:0;
+        background:#b71c1c;
+        flex-direction:column;
+        width:200px;
+        display:none;
+    }
+
+    nav ul.active{
+        display:flex;
+    }
+
+    nav ul li{
+        margin:15px 0;
+        text-align:center;
+    }
+
+    .menu-toggle{
+        display:block;
+    }
+}
+
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<nav id="navbar">
+    <div class="logo">🍕 Pizza Heaven 
+        <span class="cart">🛒 <span id="cart-count">0</span></span>
+    </div>
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+    <ul id="nav-links">
+        <li><a href="#home" class="nav-link active">Home</a></li>
+        <li><a href="#menu" class="nav-link">Menu</a></li>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+</nav>
+
+<section id="home">
+    <h1>Hot & Fresh Pizza</h1>
+    <p>Order your favorite pizza now 🍕</p>
+</section>
+
+<section id="menu">
+    <h1>Our Special Pizzas</h1>
+    <div class="cards">
+        <div class="card">
+            <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX2w-6ljxAJtEImAJ4zBsRnou1CoSAVmgvQw&s>
+            <h3>Margherita</h3>
+            <p>₹199</p>
+            <button onclick="addToCart()">Add to Cart</button>
+        </div>
+
+        <div class="card">
+            <img src="https://keyafoods.com/cdn/shop/articles/Classic_Chicken_Burger_36.png?v=1704438823&width=1100">
+            <h3>Farmhouse</h3>
+            <p>₹299</p>
+            <button onclick="addToCart()">Add to Cart</button>
+        </div>
+
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3">
+            <h3>Peppy Paneer</h3>
+            <p>₹249</p>
+            <button onclick="addToCart()">Add to Cart</button>
+        </div>
+    </div>
+</section>
+
+<section id="about">
+    <h1>About Us</h1>
+    <p>We serve delicious and fresh pizzas made with love ❤️</p>
+</section>
+
+<section id="contact">
+    <h1>Contact Us</h1>
+    <p>📞 +91 9876543210</p>
+</section>
+
+<script>
+
+/* Scroll Navbar & Progress */
+window.addEventListener("scroll", function(){
+    let navbar=document.getElementById("navbar");
+    let scrollTop=document.documentElement.scrollTop;
+    let scrollHeight=document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    let progress=(scrollTop/scrollHeight)*100;
+    document.getElementById("progress").style.width=progress+"%";
+
+    if(scrollTop>50){
+        navbar.classList.add("scrolled");
+    }else{
+        navbar.classList.remove("scrolled");
+    }
+
+    /* Active link while scrolling */
+    document.querySelectorAll("section").forEach(section=>{
+        let top=scrollTop;
+        let offset=section.offsetTop-150;
+        let height=section.offsetHeight;
+        let id=section.getAttribute("id");
+
+        if(top>=offset && top<offset+height){
+            document.querySelectorAll(".nav-link").forEach(link=>{
+                link.classList.remove("active");
+                document.querySelector(".nav-link[href*="+id+"]").classList.add("active");
+            });
+        }
+    });
+});
+
+/* Hamburger Toggle */
+document.getElementById("menu-toggle").onclick=function(){
+    document.getElementById("nav-links").classList.toggle("active");
+}
+
+/* Cart Function */
+let count=0;
+function addToCart(){
+    count++;
+    document.getElementById("cart-count").innerText=count;
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #4e54c8, #8f94fb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            margin-bottom: 15px;
+        }
+
+        .status {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .board {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background: #ffffff;
+            color: #333;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .cell:hover {
+            background: #f1f1f1;
+        }
+
+        .win-line {
+            position: absolute;
+            background: red;
+            height: 5px;
+            width: 0;
+            top: 0;
+            left: 0;
+            transform-origin: left center;
+            animation: drawLine 0.4s forwards;
+        }
+
+        @keyframes drawLine {
+            from { width: 0; }
+            to { width: 300px; }
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #00d4ff;
+            color: #000;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #00b4d8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Tic Tac Toe</h1>
+    <div class="status" id="status">Player X's Turn</div>
+
+    <div class="board" id="board">
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+    </div>
+
+    <button onclick="resetGame()">Restart Game</button>
+</div>
+
+<script>
+    const board = document.getElementById("board");
+    const cells = document.querySelectorAll(".cell");
+    const statusText = document.getElementById("status");
+
+    let currentPlayer = "X";
+    let gameActive = true;
+    let gameState = ["", "", "", "", "", "", "", "", ""];
+
+    const winningConditions = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+
+    function handleCellClick() {
+        const index = this.getAttribute("data-index");
+
+        if (gameState[index] !== "" || !gameActive) return;
+
+        gameState[index] = currentPlayer;
+        this.textContent = currentPlayer;
+
+        checkResult();
+    }
+
+    function drawWinLine(conditionIndex) {
+        const line = document.createElement("div");
+        line.classList.add("win-line");
+
+        const styles = [
+            "top:50px; left:0;",
+            "top:160px; left:0;",
+            "top:270px; left:0;",
+            "top:0; left:50px; height:300px; width:5px;",
+            "top:0; left:160px; height:300px; width:5px;",
+            "top:0; left:270px; height:300px; width:5px;",
+            "top:0; left:0; width:420px; transform: rotate(45deg);",
+            "top:0; left:0; width:420px; transform: rotate(-45deg);"
+        ];
+
+        line.style.cssText += styles[conditionIndex];
+        board.appendChild(line);
+    }
+
+    function checkResult() {
+        let roundWon = false;
+        let winIndex = -1;
+
+        for (let i = 0; i < winningConditions.length; i++) {
+            const [a, b, c] = winningConditions[i];
+
+            if (
+                gameState[a] !== "" &&
+                gameState[a] === gameState[b] &&
+                gameState[b] === gameState[c]
+            ) {
+                roundWon = true;
+                winIndex = i;
+                break;
+            }
+        }
+
+        if (roundWon) {
+            statusText.textContent = `Player ${currentPlayer} Wins! 🎉`;
+            drawWinLine(winIndex);
+            gameActive = false;
+            return;
+        }
+
+        if (!gameState.includes("")) {
+            statusText.textContent = "It's a Draw 🤝";
+            gameActive = false;
+            return;
+        }
+
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
+        statusText.textContent = `Player ${currentPlayer}'s Turn`;
+    }
+
+    function resetGame() {
+        currentPlayer = "X";
+        gameActive = true;
+        gameState = ["", "", "", "", "", "", "", "", ""];
+        statusText.textContent = "Player X's Turn";
+
+        cells.forEach(cell => cell.textContent = "");
+
+        const oldLine = document.querySelector(".win-line");
+        if (oldLine) oldLine.remove();
+    }
+
+    cells.forEach(cell => cell.addEventListener("click", handleCellClick));
+</script>
+
+</body>
+</html>
